@@ -101,5 +101,5 @@ periods.each{ |period|
     current_page_no += 1
     next_page_link = page.at(".rgPageNext")
     page = click(page, next_page_link)
-    next_page_link = nil if page.nil?}
-end
+    next_page_link = nil if page.nil?
+  end}

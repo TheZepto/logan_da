@@ -4,7 +4,7 @@
 require 'scraperwiki'
 require 'mechanize'
 
-ENV['MORPH_PERIOD'] = Date.new('2007/1/1')
+ENV['MORPH_PERIOD'] = '2007-01'
 
 # Scraping from Masterview 2.0
 case ENV['MORPH_PERIOD']

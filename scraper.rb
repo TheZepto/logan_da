@@ -49,32 +49,13 @@ end
 periodstrs = [2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010, 2009, 2008, 2007]
 periodstrs.map(&:to_s).product([*'-01'..'-12'].reverse).map(&:join).select{|d| d <= Date.today.to_s[0..-3]}
 
-periodstrs.each{ |periodstr| 
+periodstrs.each {|periodstr| 
   
-  ENV['MORPH_PERIOD'] = periodstr 
-
-  # Scraping from Masterview 2.0
-  case ENV['MORPH_PERIOD']
-    when 'lastmonth'
-      period = "&1=lastmonth"
-    when 'thismonth'
-      period = "&1=thismonth"
-    else
-      unless ENV['MORPH_PERIOD'] == nil
-        matches = ENV['MORPH_PERIOD'].scan(/^([0-9]{4})-(0[1-9]|1[0-2])$/)
-        unless matches.empty?
-          period = "&1=" + Date.new(matches[0][0].to_i, matches[0][1].to_i, 1).strftime("%d/%m/%Y")
-          period = period + "&2=" + Date.new(matches[0][0].to_i, matches[0][1].to_i, -1).strftime("%d/%m/%Y")
-        else
-          period = "&1=thisweek"
-          ENV['MORPH_PERIOD'] = 'thisweek'
-        end
-      else
-        period = "&1=thisweek"
-        ENV['MORPH_PERIOD'] = 'thisweek'
-      end
-  end
-  puts "Getting data in `" + ENV['MORPH_PERIOD'] + "`, changable via MORPH_PERIOD environment"
+  matches = periodstr.scan(/^([0-9]{4})-(0[1-9]|1[0-2])$/)
+  period = "&1=" + Date.new(matches[0][0].to_i, matches[0][1].to_i, 1).strftime("%d/%m/%Y")
+  period = period + "&2=" + Date.new(matches[0][0].to_i, matches[0][1].to_i, -1).strftime("%d/%m/%Y")
+  
+  puts "Getting data in `" + periodstr + "`, changable via MORPH_PERIOD environment"
 
   url = "http://pdonline.logan.qld.gov.au/MasterViewUI/Modules/ApplicationMaster/default.aspx?page=found" + period + "&4a=&6=F"
   comment_url = "mailto:council@logan.qld.gov.au"

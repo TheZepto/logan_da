@@ -22,7 +22,7 @@ def scrape_page(page)
         puts "Saving record " + record['council_reference'] + " - " + record['address']
 #        puts record
 #         ScraperWiki.save_sqlite(['council_reference'], record)
-      else
+#       else
 #         puts "Skipping already saved record " + record['council_reference']
       end
     rescue

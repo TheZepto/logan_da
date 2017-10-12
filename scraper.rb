@@ -6,8 +6,8 @@ require 'mechanize'
 require 'date'
 
 def scrape_page(page)
-  page.at("table.rgMasterTable").search("tr.rgRow,tr.rgAltRow").each do |tr|
-    begin
+  begin
+    page.at("table.rgMasterTable").search("tr.rgRow,tr.rgAltRow").each do |tr|
       tds = tr.search('td').map{|t| t.inner_html.gsub("\r\n", "").strip}
       day, month, year = tds[2].split("/").map{|s| s.to_i}
       record = {
@@ -25,10 +25,9 @@ def scrape_page(page)
 #       else
 #         puts "Skipping already saved record " + record['council_reference']
       end
-    rescue
-      puts "Page is empty."
-      next
     end
+  rescue
+      puts "Page is empty."
   end
 end
 
